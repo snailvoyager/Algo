@@ -6,11 +6,11 @@ public class Main {
 		// TODO Auto-generated method stub
 		CircularLinkedList cList = new CircularLinkedList();
 		
-		cList.add(11);
-		cList.add(22);
-		cList.add(33);
-		cList.add(44);
-		cList.add(55);
+		cList.addFirst(11);
+		cList.addFirst(22);
+		cList.addFirst(33);
+		cList.addLast(44);
+		cList.addLast(55);
 
 		System.out.println("size : " + cList.size());
 		System.out.println(cList.toString());
