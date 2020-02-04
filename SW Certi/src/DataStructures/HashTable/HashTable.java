@@ -29,7 +29,7 @@ public class HashTable {
 	public enum SlotStatus{EMPTY, DELETED, INUSE}
 	
 	static class Table{
-		Slot[] tbl;
+		Slot[] tbl;			//데이터가 저장되는 슬롯 테이블
 		
 		Table(){
 			tbl = new Slot[100];
@@ -56,7 +56,7 @@ public class HashTable {
 			if(this.tbl[hv].status != SlotStatus.INUSE)
 				return null;
 			else {
-				this.tbl[hv].status = SlotStatus.DELETED;
+				this.tbl[hv].status = SlotStatus.DELETED;	//충돌의 해결책을 위해 슬롯상태 Deleted 포함
 				return this.tbl[hv].value;
 			}
 		}
@@ -84,6 +84,12 @@ public class HashTable {
 		System.out.println(searchP.toString());
 		
 		System.out.println(table.remove(20200012).toString());
+		
+		Person park = new Person(20200103, "Park");		//해쉬코드 충돌 데이터
+		table.put(park.getEmpno(), park);
+		
+		searchP = table.get(20200003);
+		System.out.println(searchP.toString());
 		
 	}
 
