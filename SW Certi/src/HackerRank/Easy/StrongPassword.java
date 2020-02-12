@@ -29,7 +29,7 @@ public class StrongPassword {
         if(!uppMatcher.find())
             result++;
 
-        Pattern spcPattern = Pattern.compile("[!@#$%^&*()-+]");
+        Pattern spcPattern = Pattern.compile("[!@#$%^&*()+-]");		// "-"는 범위지정으로 맨마지막에 둬야함
         Matcher spcMatcher = spcPattern.matcher(password);
         if(!spcMatcher.find())
             result++;
