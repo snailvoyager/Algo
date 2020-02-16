@@ -5,31 +5,36 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Scanner;
 
 public class BigSorting {
 
 	static String[] bigSorting(String[] unsorted) {
-//        List<String> list = Arrays.asList(unsorted);
 
         Comparator<String> cp = new Comparator<String>(){
             public int compare(String s1, String s2){
-                BigDecimal bd1 = new BigDecimal(s1);
-                BigDecimal bd2 = new BigDecimal(s2);
-                return bd1.compareTo(bd2);
+                return compareString(s1, s2);
             }
         };
         Arrays.sort(unsorted, cp);
-//        Collections.sort(list, cp);
-
-//        String[] result = new String[list.size()];
-//        for(int i=0; i<list.size(); i++)
-//        	result[i] = list.get(i);
         return unsorted;
     }
+	
+	static int compareString(String s1, String s2) {
+		if(s1.length() < s2.length())	return -1;
+		if(s1.length() > s2.length())	return 1;
+		
+		//길이가 같으면
+		for(int i=0; i<s1.length(); i++) {
+			if(s1.charAt(i) < s2.charAt(i))
+				return -1;
+			if(s1.charAt(i) > s2.charAt(i))
+				return 1;
+		}
+		
+		return 0;
+	}
 
     public static void main(String[] args) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
