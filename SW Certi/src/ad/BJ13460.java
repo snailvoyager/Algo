@@ -49,15 +49,9 @@ public class BJ13460 {
         }
 
         searchBoard();      //각 정점 찾기
-        VisitRed[Ri][Rj] = 'X';     //시작점 체크
-        VisitBlue[Bi][Bj] = 'X';
-
         bfs();
-        //dfs(Ri, Rj, 0);
-        System.out.println("Red Count : " + countRed);
 
-        //countBlue = Integer.MAX_VALUE;
-        //dfs(Bi, Bj, 0);
+        System.out.println("Red Count : " + countRed);
         System.out.println("Blue Count : " + countBlue);
         
         bw.flush();
@@ -90,6 +84,8 @@ public class BJ13460 {
 
         RedQ.add(new Node(Ri, Rj, 0));
         BlueQ.add(new Node(Bi, Bj, 0));
+        VisitRed[Ri][Rj] = 'X';     //시작점 체크
+        VisitBlue[Bi][Bj] = 'X';
 
         while(!RedQ.isEmpty()){
             //System.out.println(RedQ.toString());
@@ -114,6 +110,8 @@ public class BJ13460 {
                 return;
             }
 
+            
+
             //go up
             if(Board[rx-1][ry] != '#'){
                 for(int i=rx-1; i>0; i--){
@@ -121,7 +119,7 @@ public class BJ13460 {
                         if(countRed > rc+1){
                             countRed = rc+1;
                             System.out.println("Up RedQ");
-                            return;
+                            break;
                         }
                     }
                     if(Board[i][ry] == 'B'){            //파란공을 만나면 멈춤
@@ -135,6 +133,9 @@ public class BJ13460 {
                         System.out.println("Up RedQ");
                         break;
                     }
+                    if(VisitRed[i][ry] == 'X'){
+                        break;
+                    }
                 }
             }
             if(blueNode != null && Board[bx-1][by] != '#'){
@@ -143,7 +144,7 @@ public class BJ13460 {
                         if(countBlue > bc+1){
                             countBlue = bc+1;
                             System.out.println("Up BlueQ");
-                            return;
+                            break;
                         }
                     }
                     if(Board[i][by] == 'R'){        //빨간공을 만나면 멈춤
@@ -157,6 +158,9 @@ public class BJ13460 {
                         System.out.println("Up BlueQ");
                         break;
                     }
+                    if(VisitBlue[i][by] == 'X'){
+                        break;
+                    }
                 }
             }
             
@@ -167,7 +171,7 @@ public class BJ13460 {
                         if(countRed > rc+1){
                             countRed = rc+1;
                             System.out.println("Down Red");
-                            return;
+                            break;
                         }
                     }
                     if(Board[i][ry] == 'B'){
@@ -192,7 +196,7 @@ public class BJ13460 {
                         if(countBlue > bc+1){
                             countBlue = bc+1;
                             System.out.println("Down Blue");
-                            return;
+                            break;
                         }
                     }
                     if(Board[i][by] == 'R'){
@@ -218,7 +222,7 @@ public class BJ13460 {
                         if(countRed > rc+1){
                             countRed = rc+1;
                             System.out.println("Right RedQ");
-                            return;
+                            break;
                         }
                     }
                     if(Board[rx][i] == 'B'){
@@ -243,7 +247,7 @@ public class BJ13460 {
                         if(countBlue > bc+1){
                             countBlue = bc+1;
                             System.out.println("Right BlueQ");
-                            return;
+                            break;
                         }
                     }
                     if(Board[bx][i] == 'B'){
@@ -269,7 +273,7 @@ public class BJ13460 {
                         if(countRed > rc+1){
                             countRed = rc+1;
                             System.out.println("Left Red");
-                            return;
+                            break;
                         }
                     }
                     if(Board[rx][i] == 'B'){
@@ -294,7 +298,7 @@ public class BJ13460 {
                         if(countBlue > bc+1){
                             countBlue = bc+1;
                             System.out.println("Left Blue");
-                            return;
+                            break;
                         }
                     }
                     if(Board[bx][i] == 'R'){
