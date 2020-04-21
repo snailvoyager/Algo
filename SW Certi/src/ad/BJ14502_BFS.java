@@ -43,42 +43,37 @@ public class BJ14502_BFS {
 					Virus.add(new Node(i, j));
 			}
 		}
-		
-		
-		for(int i=0; i<3; i++) {
-			for(int j=0; j<3; j++) {
-				Map[i][j] = 1;
-				
-				for(int i2=0; i2<3; i2++) {
-					for(int j2=0; j2<3; j2++) {
-						if(Map[i2][j2] == 0) {
-							Map[i2][j2] = 1;
-							
-							for(int i3=0; i3<3; i3++) {
-								for(int j3=0; j3<3; j3++) {
-									if(Map[i3][j3] ==0) {
-										Map[i3][j3]= 1;
-										System.out.println("A:" + i + ","+j+" B:"+i2+","+j2+" C:"+i3+","+j3);
-										Map[i3][j3] = 0;
-									}
-								}
-							}
-							Map[i2][j2] = 0;
-						}
-							
-					}
-				}
-				Map[i][j] = 0;
+		combi(0, 0);
+		System.out.println(Answer);
+	}
+	
+	public static void combi(int start, int depth) {		//2차원 배열 조합
+		if(depth == 3) {		//벽 3개를 세웠으면 바이러스 전파
+			bfs();
+			searchSafe();
+			return;
+		}
+		for(int i=start; i<N*M; i++) {
+			int x = i / M;		//X 좌표
+			int y = i % M;		//Y 좌표
+			
+			if(Map[x][y] == 0) {
+				Map[x][y] = 1;			//빈칸에 벽을 세운다
+				combi(i+1, depth+1);	//다음 벽 세우기
+				Map[x][y] = 0;			//빈칸 원복
 			}
 		}
 	}
-
+	
 	public static void searchSafe() {		//전체 탐색
 		int cnt = 0;
 		for(int i=0; i<N; i++) {
 			for(int j=0; j<M; j++) {
-				if(Map[i][j] == 0) {
+				if(Map[i][j] == 0) {		//안전영역 체크
 					cnt++;
+				}
+				if(Map[i][j] == -1) {		//바이러스가 전파됐던 곳 원복
+					Map[i][j] = 0;
 				}
 			}
 		}
