@@ -88,11 +88,66 @@ public class BJ17837 {
 					}
 					
 				} else if (nextX>0 && nextX<=N && nextY>0 && nextY<=N && Map[nextX][nextY] == 1) {	//빨간 칸일 때
+					for(int j=listMap[x][y].size()-1; j>=idx; j--) {	//뒤에서부터 이동하면서 삭제
+						int n = listMap[x][y].removeLast();
+						listMap[nextX][nextY].add(n);
+						Horse[n].x = nextX;
+						Horse[n].y = nextY;
+					}
 					
+					if(listMap[nextX][nextY].size()>=4)	{	// 4개가 쌓이면 중단
+						System.out.println(Answer);
+						System.exit(0);
+					}
 				} else {	//파란칸이거나 체스판을 벗어날 때
+					switch(d) {			//이동방향을 반대로 변경
+						case 1 : Horse[i].d = 2;
+							break;
+						case 2 : Horse[i].d = 1;
+							break;
+						case 3 : Horse[i].d = 4;
+							break;
+						case 4 : Horse[i].d = 3;
+							break;
+					}
+					nextX = x + dx[Horse[i].d];
+					nextY = y + dy[Horse[i].d];
 					
+					if(nextX>0 && nextX<=N && nextY>0 && nextY<=N && Map[nextX][nextY] == 0) {	//흰색 칸일 때
+						for(int j=idx; j<listMap[x][y].size(); j++) {	//말이 저장된 인덱스부터 마지막까지 말 함께 이동
+							int n = listMap[x][y].get(j);
+							listMap[nextX][nextY].add(n);
+							Horse[n].x = nextX;
+							Horse[n].y = nextY;
+						}
+						
+						for(int j=listMap[x][y].size()-1; j>=idx; j--) {	//이동 후 삭제
+							listMap[x][y].removeLast();
+						}
+						
+						if(listMap[nextX][nextY].size()>=4)	{	// 4개가 쌓이면 중단
+							System.out.println(Answer);
+							System.exit(0);
+						}
+						
+					} else if (nextX>0 && nextX<=N && nextY>0 && nextY<=N && Map[nextX][nextY] == 1) {	//빨간 칸일 때
+						for(int j=listMap[x][y].size()-1; j>=idx; j--) {	//뒤에서부터 이동하면서 삭제
+							int n = listMap[x][y].removeLast();
+							listMap[nextX][nextY].add(n);
+							Horse[n].x = nextX;
+							Horse[n].y = nextY;
+						}
+						
+						if(listMap[nextX][nextY].size()>=4)	{	// 4개가 쌓이면 중단
+							System.out.println(Answer);
+							System.exit(0);
+						}
+					} else {
+						nextX = x;	//또 이동하려는 칸이 파란칸이거나 체스판을 벗어날 때 이동하지 않고 가만히 있는다.
+						nextY = y;
+					}
 				}
-				
+				//System.out.println(nextX + "," + nextY + " " + listMap[nextX][nextY].toString() + " " + Horse[0].x + "," + Horse[0].y + " " + Horse[0].d);
 			}
 		}
 		
