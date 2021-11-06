@@ -1,4 +1,4 @@
-package LeetCode.Easy;
+package LeetCode.Medium;
 
 public class CountandSay {
 	class Solution {
