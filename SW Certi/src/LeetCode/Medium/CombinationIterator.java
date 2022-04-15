@@ -11,7 +11,6 @@ public class CombinationIterator {
     public CombinationIterator(String characters, int combinationLength) {
         combiList = new ArrayList<>();
         Visited = new boolean[characters.length()];
-
         combi(characters, characters.length(), combinationLength, 0);
     }
 
@@ -32,6 +31,18 @@ public class CombinationIterator {
             Visited[i] = true;
             combi(characters, n, r-1, i+1);
             Visited[i] = false;
+        }
+    }
+
+    public void combi2(String characters, int n, int r, int start, StringBuilder sb) {
+        if (r == 0) {
+            combiList.add(sb.toString());
+            return;
+        }
+        for (int i=start; i<n; i++) {
+            sb.append(characters.charAt(i));
+            combi2(characters, n, r-1, i+1, sb);
+            sb.deleteCharAt(sb.length()-1);
         }
     }
 
