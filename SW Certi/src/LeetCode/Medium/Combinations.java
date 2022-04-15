@@ -73,4 +73,18 @@ public class Combinations {
             V[i] = false;
         }
     }
+
+    public void bitmask(int n, int r, List<List<Integer>> result) {
+        for (int mask=0; mask<(1<<n); mask++) {
+            if (Integer.bitCount(mask) == r) {
+                List<Integer> list = new ArrayList<>();
+                for (int pos=0; pos<n; pos++) {
+                    if ((mask & (1<<pos)) != 0) {
+                        list.add(N[pos]);
+                    }
+                }
+                result.add(list);
+            }
+        }
+    }
 }
