@@ -72,25 +72,29 @@ public class NumbersOfIslands {
     }
 
     public int numIslands(char[][] grid) {
-        int[] parent = new int[grid.length * grid[0].length];
+        int N = grid.length;
+        int M = grid[0].length;
+        int[] parent = new int[N * M];
         Arrays.fill(parent, -1);
 
-        for (int i=0; i<grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                parent[i*grid.length+j] = i*grid.length+j;      // 최초 부모는 자기 자신
+        for (int i=0; i<N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (grid[i][j] == '1') {
+                    parent[i * M + j] = i * M + j;      // 최초 부모는 자기 자신
+                }
             }
         }
 
-        for (int i=0; i<grid.length; i++) {
-            for (int j=0; j<grid[0].length; j++) {
+        for (int i=0; i<N; i++) {
+            for (int j=0; j<M; j++) {
                 if (grid[i][j] == '1') {
                     //parent[i*grid.length+j] = i*grid.length+j;      // 최초 부모는 자기 자신
 
-                    if (i + 1 < grid.length && grid[i+1][j] == '1') {
-                        union(parent, i*grid.length+j, (i+1)*grid.length+j);
+                    if (i + 1 < N && grid[i+1][j] == '1') {
+                        union(parent, i*M+j, (i+1)*M+j);
                     }
-                    if (j+1 < grid[i].length && grid[i][j+1] == '1') {
-                        union(parent, i*grid.length+j, i*grid.length+(j+1));
+                    if (j+1 < M && grid[i][j+1] == '1') {
+                        union(parent, i*M+j, i*M+(j+1));
                     }
                 }
             }
