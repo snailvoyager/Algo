@@ -1,10 +1,9 @@
 package LeetCode.Medium;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class NumbersOfIslands {
-    public int numIslands(char[][] grid) {
+    public int numIslands_fs(char[][] grid) {
         int result = 0;
 
         for (int i=0; i<grid.length; i++) {
@@ -70,5 +69,52 @@ public class NumbersOfIslands {
                 q.offer(new Node(node.x, node.y-1));
             }
         }
+    }
+
+    public int numIslands(char[][] grid) {
+        int[] parent = new int[grid.length * grid[0].length];
+        Arrays.fill(parent, -1);
+
+        for (int i=0; i<grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                parent[i*grid.length+j] = i*grid.length+j;      // 최초 부모는 자기 자신
+            }
+        }
+
+        for (int i=0; i<grid.length; i++) {
+            for (int j=0; j<grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    //parent[i*grid.length+j] = i*grid.length+j;      // 최초 부모는 자기 자신
+
+                    if (i + 1 < grid.length && grid[i+1][j] == '1') {
+                        union(parent, i*grid.length+j, (i+1)*grid.length+j);
+                    }
+                    if (j+1 < grid[i].length && grid[i][j+1] == '1') {
+                        union(parent, i*grid.length+j, i*grid.length+(j+1));
+                    }
+                }
+            }
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for (int i=0; i<parent.length; i++) {
+            if (parent[i] != -1)
+                set.add(find(parent, i));
+        }
+
+        return set.size();
+    }
+
+    public int find(int[] parent, int z) {
+        if (parent[z] != z)
+            parent[z] = find(parent, parent[z]);
+        return parent[z];
+    }
+
+    public void union(int[] parent, int x, int y) {
+        int xParent = find(parent, x);
+        int yParent = find(parent, y);
+
+        parent[yParent] = parent[xParent];
     }
 }
