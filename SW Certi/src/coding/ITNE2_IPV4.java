@@ -1,4 +1,4 @@
-package im;
+package coding;
 
 import java.util.Arrays;
 import java.util.StringTokenizer;

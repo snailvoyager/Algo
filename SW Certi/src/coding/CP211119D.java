@@ -1,4 +1,4 @@
-package programmers;
+package coding;
 
 /*
 2차원 배열을 나선형 탐색하여 출력

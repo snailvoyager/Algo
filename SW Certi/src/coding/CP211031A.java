@@ -1,4 +1,4 @@
-package programmers;
+package coding;
 
 public class CP211031A {
     public static void main(String[] args) {

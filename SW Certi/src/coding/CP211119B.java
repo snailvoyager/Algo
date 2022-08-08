@@ -1,4 +1,4 @@
-package programmers;
+package coding;
 
 /*
 2) 인코딩된 문자열이 있으면 디코딩된 문자열을 반환하십시오.
