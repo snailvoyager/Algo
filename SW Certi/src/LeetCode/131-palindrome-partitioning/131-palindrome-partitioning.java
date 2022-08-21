@@ -19,13 +19,26 @@ class Solution {
         }
         for (int i=1; i<=sub.length(); i++) {
             String head = sub.substring(0, i);
-            StringBuilder sb = new StringBuilder(head);
 
-            if (head.equals(sb.reverse().toString())) {
+            if (isPalindrome(head)) {
                 list.add(head);
                 partitioning(sub.substring(i), list, i+1);
                 list.remove(list.size()-1);
             }
         }
+    }
+
+    public static boolean isPalindrome(String str) {
+        int left = 0, right = str.length()-1;
+
+        while (left <= right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
     }
 }
