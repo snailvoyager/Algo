@@ -24,27 +24,23 @@ class Solution {
             }
         }
 
-        List<List<String>> result = new LinkedList<>();
-        for (List<String> account : accounts) {
-            if (account.size() > 0) {
-                String name = account.get(0);
-                account.remove(0);
+        Map<Integer, TreeSet<String>> users = new HashMap<>();
+        for (int i=0; i<accounts.size(); i++) {
+            int key = find(i);
+            List<String> emails = accounts.get(i);
 
-                /*Set<String> set = new HashSet<>(account);
-                account.clear();
-                account.addAll(set);
-                Collections.sort(account);
-                account.add(0, name);*/
-
-                List<String> distinctList = account.stream()
-                        .distinct()
-                        .sorted(String::compareTo)
-                        .collect(Collectors.toList());
-                distinctList.add(0, name);
-                
-                result.add(distinctList);
-            }
+            users.putIfAbsent(key, new TreeSet<>());  //신규 추가
+            users.get(key).addAll(emails.subList(1, emails.size()));    //이름 빼고 합치기
         }
+
+        List<List<String>> result = new LinkedList<>();
+        for (Integer key : users.keySet()) {
+            String name = accounts.get(key).get(0);
+            ArrayList<String> emails = new ArrayList<>(users.get(key));
+            emails.add(0, name);
+            result.add(emails);
+        }
+
         return result;
     }
 
@@ -60,10 +56,6 @@ class Solution {
 
         if (rootX == rootY)
             return;
-
         parent[rootX] = rootY;
-        accounts.get(rootX).remove(0);      //remove name;
-        accounts.get(rootY).addAll(accounts.get(rootX));
-        accounts.get(rootX).clear();
     }
 }
