@@ -9,17 +9,11 @@ public class NH221004 {
 
     public void load(String fileName) {
         //InputStreamReader ipsr = new InputStreamReader(this.getClass().getResourceAsStream("file.csv"));    //src/main/resources 파일 읽기
-        InputStreamReader ipsr = null;
-        try {
-            ipsr = new InputStreamReader(new FileInputStream("SW Certi/src/coding/" + fileName));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        BufferedReader br = new BufferedReader(ipsr);
         contacts = new HashMap<>();
 
-        try {
+        try (InputStreamReader ipsr =  new InputStreamReader(new FileInputStream("SW Certi/src/coding/" + fileName));
+             BufferedReader br = new BufferedReader(ipsr)
+        ) {
             String line = br.readLine();
             while (line != null) {
                 String[] arrStr = line.split(",");
@@ -43,13 +37,6 @@ public class NH221004 {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-                ipsr.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
